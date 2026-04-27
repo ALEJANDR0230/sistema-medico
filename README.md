@@ -130,34 +130,11 @@ cd sistema-medico
 npm install
 ```
 
-### 3. Instalar dependencias del backend
-
-```bash
-pip install flask flask-cors pdfplumber pypdf
-```
-
-> Si el comando anterior falla en Linux/Mac:
-> ```bash
-> pip install flask flask-cors pdfplumber pypdf --break-system-packages
-> ```
-
-### 4. Ejecutar el frontend
+### 3. Ejecutar el frontend
 
 ```bash
 npm run dev
 ```
-
-La aplicación estará disponible en `http://localhost:5173`
-
-### 5. Ejecutar el servidor Python
-
-```bash
-python servidor.py
-```
-
-El servidor quedará escuchando en `http://localhost:5000`. El frontend lo llama automáticamente al subir un PDF. Para verificar que funciona, abre `http://localhost:5000/ping` en el navegador.
-
----
 
 ## Usuarios de prueba
 
