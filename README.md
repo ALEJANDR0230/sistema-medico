@@ -1,16 +1,206 @@
-# React + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Sistema de Análisis de Estudios Clínicos
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Descripción general
 
-## React Compiler
+Sistema web tipo SaaS diseñado para **digitalizar el análisis de estudios de sangre** — Laboratorio Juárez. Permite a los pacientes subir sus resultados en PDF y recibir una interpretación clara, visual y comprensible, además de la evaluación de un médico y recomendaciones personalizadas.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+> El sistema transforma datos clínicos complejos en información útil mediante visualización con semáforos de estado y explicaciones en lenguaje sencillo.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Problema que resuelve
+
+Los resultados de laboratorio suelen entregarse en formato PDF o papel **sin explicación clara**, lo que dificulta su interpretación para los pacientes.
+
+| Sin el sistema | Con el sistema |
+|---|---|
+| Resultados en PDF sin contexto | Interpretación automática de valores |
+| Terminología médica confusa | Explicaciones en lenguaje sencillo |
+| Sin seguimiento histórico | Gráficas de evolución en el tiempo |
+| Sin orientación profesional | Opinión médica y dieta personalizada |
+
+---
+
+## Funcionalidades principales
+
+- **Autenticación por roles** — Administrador, Médico y Paciente
+- **Carga de PDFs** — Subida de análisis clínicos directamente desde la app
+- **Procesamiento automático** — Extracción e interpretación de resultados con Python
+- **Semáforo de resultados** — Indicadores visuales: normal, alto o bajo
+- **Gráficas históricas** — Evolución de valores a lo largo del tiempo
+- **Opinión médica** — Revisión y notas del médico tratante
+- **Asignación de dietas** — Recomendaciones nutricionales personalizadas
+- **Mapa de clínicas** — Laboratorios cercanos con Leaflet y OpenStreetMap
+- **Edición de perfil** — El paciente puede actualizar sus datos personales
+
+---
+
+## Roles del sistema
+
+<details>
+<summary><strong>Administrador</strong></summary>
+
+- Gestión de médicos: crear, editar, activar y desactivar cuentas (baja lógica)
+
+</details>
+
+<details>
+<summary><strong>Médico</strong></summary>
+
+- Visualización de pacientes separados en pendientes y atendidos
+- Revisión de resultados con semáforo de colores
+- Emisión de opiniones médicas
+- Asignación de planes de dieta personalizados
+
+</details>
+
+<details>
+<summary><strong>Paciente</strong></summary>
+
+- Subida de estudios en PDF
+- Consulta de resultados con indicadores visuales y explicaciones expandibles
+- Visualización de gráficas de evolución histórica
+- Lectura de opinión del médico
+- Acceso a dieta recomendada con fotos y listas de alimentos
+- Mapa de clínicas cercanas
+- Edición de perfil personal
+
+</details>
+
+---
+
+## Flujo del sistema
+
+```
+1. El paciente se registra en el sistema
+        |
+2. Sube su PDF de análisis de sangre
+        |
+3. Python extrae los analitos y devuelve un JSON estructurado
+        |
+4. El sistema muestra los resultados con semáforo de colores y explicaciones
+        |
+5. El médico revisa y emite su opinión médica
+        |
+6. El médico asigna una dieta personalizada
+        |
+7. El paciente consulta toda la información en su panel
+```
+
+---
+
+## Tecnologías utilizadas
+
+### Frontend
+
+| Tecnología | Versión | Uso |
+|---|---|---|
+| React | 18 | Librería principal para construir la interfaz |
+| Vite | 5+ | Servidor de desarrollo y compilación |
+| Tailwind CSS | 3 | Estilos con clases utilitarias |
+| React Router | 6 | Navegación entre pantallas sin recarga |
+| Recharts | 2 | Gráficas de tendencia histórica de analitos |
+| Leaflet.js | 1.9 | Mapa interactivo de clínicas cercanas |
+| MockAPI.io | — | Base de datos temporal durante el desarrollo |
+
+---
+
+## Estructura del proyecto
+
+```
+clinica-sangre/
+|
++-- src/
+|   |
+|   +-- pages/              # Pantallas completas (una por rol)
+|   |   +-- Login.jsx
+|   |   +-- Registro.jsx
+|   |   +-- AdminPanel.jsx
+|   |   +-- MedicoPanel.jsx
+|   |   +-- PacientePanel.jsx
+|   |
+|   +-- components/         # Piezas reutilizables en varias pantallas
+|   |   +-- GraficaTendencia.jsx
+|   |   +-- MapaClinicas.jsx
+|   |   +-- PerfilPaciente.jsx
+|   |   +-- SubirPDF.jsx
+|   |
+|   +-- hooks/              # Lógica separada de la interfaz
+|   |   +-- useAdminPanel.js
+|   |   +-- useMedicoPanel.js
+|   |   +-- usePacientePanel.js
+|   |
+|   +-- App.jsx             # Punto de entrada: maneja login y rutas
+|   +-- main.jsx            # Arranca React en el HTML
+|   +-- index.css           # Estilos globales + directivas Tailwind
+|
++-- servidor.py             # API Flask para procesar PDFs con Python
++-- index.html
++-- package.json
++-- tailwind.config.js
++-- vite.config.js
+```
+
+---
+
+## Instalación y ejecución
+
+### Requisitos previos
+
+- Node.js 18+
+- Python 3.11+
+- npm
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/ALEJANDR0230/sistema-medico.git
+cd sistema-medico
+```
+
+### 2. Instalar dependencias del frontend
+
+```bash
+npm install
+```
+
+### 3. Instalar dependencias del backend
+
+```bash
+pip install flask flask-cors pdfplumber pypdf
+```
+
+> Si el comando anterior falla en Linux/Mac:
+> ```bash
+> pip install flask flask-cors pdfplumber pypdf --break-system-packages
+> ```
+
+### 4. Ejecutar el frontend
+
+```bash
+npm run dev
+```
+
+La aplicación estará disponible en `http://localhost:5173`
+
+### 5. Ejecutar el servidor Python
+
+```bash
+python servidor.py
+```
+
+El servidor quedará escuchando en `http://localhost:5000`. El frontend lo llama automáticamente al subir un PDF. Para verificar que funciona, abre `http://localhost:5000/ping` en el navegador.
+
+---
+
+## Usuarios de prueba
+
+| Rol | Correo | Contraseña |
+|---|---|---|
+| Administrador | admin@clinica.com | admin123 |
+| Médico | medico@clinica.com | medico123 |
+| Paciente | paciente@clinica.com | paciente123 |
+
