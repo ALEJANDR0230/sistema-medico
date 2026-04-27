@@ -108,43 +108,6 @@ Los resultados de laboratorio suelen entregarse en formato PDF o papel **sin exp
 
 ---
 
-## Estructura del proyecto
-
-```
-clinica-sangre/
-|
-+-- src/
-|   |
-|   +-- pages/              # Pantallas completas (una por rol)
-|   |   +-- Login.jsx
-|   |   +-- Registro.jsx
-|   |   +-- AdminPanel.jsx
-|   |   +-- MedicoPanel.jsx
-|   |   +-- PacientePanel.jsx
-|   |
-|   +-- components/         # Piezas reutilizables en varias pantallas
-|   |   +-- GraficaTendencia.jsx
-|   |   +-- MapaClinicas.jsx
-|   |   +-- PerfilPaciente.jsx
-|   |   +-- SubirPDF.jsx
-|   |
-|   +-- hooks/              # Lógica separada de la interfaz
-|   |   +-- useAdminPanel.js
-|   |   +-- useMedicoPanel.js
-|   |   +-- usePacientePanel.js
-|   |
-|   +-- App.jsx             # Punto de entrada: maneja login y rutas
-|   +-- main.jsx            # Arranca React en el HTML
-|   +-- index.css           # Estilos globales + directivas Tailwind
-|
-+-- servidor.py             # API Flask para procesar PDFs con Python
-+-- index.html
-+-- package.json
-+-- tailwind.config.js
-+-- vite.config.js
-```
-
----
 
 ## Instalación y ejecución
 
