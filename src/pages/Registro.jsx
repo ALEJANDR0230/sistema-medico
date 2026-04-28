@@ -217,7 +217,7 @@ function Registro({ onVolver }) {
   return (
     <div className="min-h-screen flex">
       <div
-        className="hidden md:flex md:w-1/2 bg-cover bg-center relative"
+        className="hidden md:flex md:w-1/4 bg-cover bg-center relative"
         style={{ backgroundImage: "url(" + FOTO + ")" }}
       >
         <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(15,110,86,0.75) 0%, rgba(29,62,130,0.65) 100%)" }} />
