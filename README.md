@@ -121,7 +121,7 @@ Los resultados de laboratorio suelen entregarse en formato PDF o papel **sin exp
 
 ```bash
 git clone https://github.com/ALEJANDR0230/sistema-medico.git
-cd sistema-medico
+cd Estudio
 ```
 
 ### 2. Instalar dependencias del frontend
