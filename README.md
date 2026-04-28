@@ -5,7 +5,7 @@
 
 ## Descripción general
 
-Sistema web tipo SaaS diseñado para **digitalizar el análisis de estudios de sangre** — Laboratorio Juárez. Permite a los pacientes subir sus resultados en PDF y recibir una interpretación clara, visual y comprensible, además de la evaluación de un médico y recomendaciones personalizadas.
+Sistema web diseñado para **digitalizar el análisis de estudios de sangre** . Permite a los pacientes subir sus resultados en PDF y recibir una interpretación clara, visual y comprensible, además de la evaluación de un médico y recomendaciones personalizadas.
 
 > El sistema transforma datos clínicos complejos en información útil mediante visualización con semáforos de estado y explicaciones en lenguaje sencillo.
 
