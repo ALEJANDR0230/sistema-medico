@@ -22,7 +22,7 @@ function Login({ onLogin, onRegistro }) {
         localStorage.setItem("usuario", JSON.stringify(usuario))
         onLogin(usuario)
       } else {
-        setError("Correo o contrasena incorrectos")
+        setError("Correo o contraseña incorrectos")
       }
     } catch {
       setError("Error al conectar con el servidor")
@@ -65,7 +65,7 @@ function Login({ onLogin, onRegistro }) {
 
         <div className="mb-5">
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Contrasena
+            Contraseña
           </label>
           <input
             type="password"

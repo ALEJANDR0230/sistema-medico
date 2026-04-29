@@ -99,7 +99,7 @@ function Registro({ onVolver }) {
               placeholder="correo@ejemplo.com" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Contrasena</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
             <input type="password" value={form.password} onChange={(e) => actualizar("password", e.target.value)}
               className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Minimo 6 caracteres" />
