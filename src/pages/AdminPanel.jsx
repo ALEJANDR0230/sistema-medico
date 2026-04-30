@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react"
-import { URL_API, ESPECIALIDADES_BASE } from "../constantes/medicas"
+import { URL_API, ESPECIALIDADES_BASE } from "../constantes/catalogos"
 import {
   botonPrimario, botonSecundario,
   botonAmbar, botonRojoSuave, botonVerdeSuave,
