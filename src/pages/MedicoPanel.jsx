@@ -403,7 +403,7 @@ function MedicoPanel({ usuario, onLogout }) {
         <div className="col-span-2">
           {!seleccionado ? (
             <div className="bg-white rounded-2xl shadow flex flex-col items-center justify-center h-64">
-              <p className="text-4xl mb-3">👈</p>
+              <p className="text-4xl mb-3"></p>
               <p className="text-gray-400 text-sm">Selecciona un paciente de la lista</p>
             </div>
           ) : (

@@ -1,84 +1,71 @@
-
-
 import { useState } from "react"
 import { RANGOS_REFERENCIA, EXPLICACIONES, COLORES_SEMAFORO } from "../../constantes/catalogos"
 
 // ─────────────────────────────────────────────────────────────
-//  SUBCOMPONENTE INTERNO: Barra de progreso
-//  Muestra visualmente qué tan lejos está el valor del rango normal
+//  BARRA DE PROGRESO MEJORADA
 // ─────────────────────────────────────────────────────────────
 function BarraProgreso({ analito, colorBarra }) {
   const rango = RANGOS_REFERENCIA[analito.analito]
-
-  // Si no hay rango de referencia no se puede dibujar la barra
   if (!rango || analito.valor_numerico === null) return null
 
-  // El máximo de la barra es 1.5 veces el límite superior del rango
-  const maximo       = rango.ref_high * 1.5
-  const pctValor     = Math.min((analito.valor_numerico / maximo) * 100, 100)
-  const pctLimite    = Math.min((rango.ref_high / maximo) * 100, 100)
+  const maximo = rango.ref_high * 1.5
+  const pctValor = Math.min((analito.valor_numerico / maximo) * 100, 100)
+  const pctLimite = Math.min((rango.ref_high / maximo) * 100, 100)
 
   return (
-    <div className="w-full mt-2">
-      {/* Barra con el valor actual */}
-      <div className="relative w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-        {/* Relleno de color según el semáforo */}
+    <div className="mt-3">
+      <div className="relative w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
         <div
-          className="absolute left-0 top-0 h-full rounded-full transition-all"
-          style={{ width: pctValor + "%", background: colorBarra }}
+          className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
+          style={{ width: `${pctValor}%`, background: colorBarra }}
         />
-        {/* Línea vertical que marca el límite superior normal */}
         <div
-          className="absolute top-0 h-full w-px bg-gray-400 opacity-50"
-          style={{ left: pctLimite + "%" }}
+          className="absolute top-0 h-full w-px bg-gray-400 opacity-60"
+          style={{ left: `${pctLimite}%` }}
         />
       </div>
-
-      {/* Etiquetas del rango debajo de la barra */}
-      <div className="flex justify-between mt-0.5">
-        <span className="text-xs text-gray-400">{rango.ref_low}</span>
-        <span className="text-xs text-gray-400">{rango.ref_high} {rango.unidad}</span>
+      <div className="flex justify-between mt-1.5 text-[10px] text-gray-400">
+        <span>{rango.ref_low}</span>
+        <span>{rango.ref_high} {rango.unidad}</span>
       </div>
     </div>
   )
 }
 
 // ─────────────────────────────────────────────────────────────
-//  SUBCOMPONENTE INTERNO: Sección de explicación expandible
+//  SECCIÓN DE EXPLICACIÓN
 // ─────────────────────────────────────────────────────────────
 function SeccionExplicacion({ analito }) {
   const explicacion = EXPLICACIONES[analito.analito]
   if (!explicacion) return null
 
   return (
-    <div className="border-t border-gray-200 bg-white px-4 py-4 space-y-3">
-
+    <div className="border-t border-gray-100 bg-gray-50 px-5 py-5 space-y-4 text-sm">
       <div>
-        <p className="text-xs font-bold text-gray-500 uppercase mb-1">¿Qué es?</p>
-        <p className="text-sm text-gray-700 leading-relaxed">{explicacion.que_es}</p>
+        <p className="font-semibold text-gray-600 text-xs uppercase tracking-wider mb-1.5">¿Qué es?</p>
+        <p className="text-gray-700 leading-relaxed">{explicacion.que_es}</p>
       </div>
 
       <div>
-        <p className="text-xs font-bold text-gray-500 uppercase mb-1">¿Qué significa tu resultado?</p>
-        <p className="text-sm text-gray-700 leading-relaxed">{explicacion.que_significa}</p>
+        <p className="font-semibold text-gray-600 text-xs uppercase tracking-wider mb-1.5">¿Qué significa tu resultado?</p>
+        <p className="text-gray-700 leading-relaxed">{explicacion.que_significa}</p>
       </div>
 
       <div>
-        <p className="text-xs font-bold text-gray-500 uppercase mb-1">Recomendación</p>
-        <p className="text-sm text-gray-700 leading-relaxed">{explicacion.recomendacion}</p>
+        <p className="font-semibold text-gray-600 text-xs uppercase tracking-wider mb-1.5">Recomendación</p>
+        <p className="text-gray-700 leading-relaxed">{explicacion.recomendacion}</p>
       </div>
 
-      {/* Fuente médica con enlace */}
-      <div className="bg-blue-50 border border-blue-100 rounded-xl px-3 py-2">
-        <p className="text-xs font-bold text-blue-600 uppercase mb-1">Fuente de referencia</p>
-        <p className="text-xs text-blue-700 font-medium mb-1">{explicacion.referencia}</p>
-        <a
-          href={explicacion.url}
-          target="_blank"
+      <div className="pt-2 border-t border-gray-200">
+        <p className="text-[10px] font-semibold text-blue-600 mb-1">Fuente médica</p>
+        <p className="text-xs text-blue-700 font-medium">{explicacion.referencia}</p>
+        <a 
+          href={explicacion.url} 
+          target="_blank" 
           rel="noopener noreferrer"
-          className="text-xs text-blue-500 hover:underline"
+          className="text-xs text-blue-600 hover:underline inline-flex items-center gap-1 mt-1"
         >
-          Ver artículo
+          Ver artículo completo →
         </a>
       </div>
     </div>
@@ -86,67 +73,65 @@ function SeccionExplicacion({ analito }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  COMPONENTE PRINCIPAL: TarjetaAnalito
+//  COMPONENTE PRINCIPAL: ResultadoSangre
 // ─────────────────────────────────────────────────────────────
 function ResultadoSangre({ analito, semaforo }) {
   const [expandido, setExpandido] = useState(false)
 
-  const estado      = semaforo(analito)
-  const colores     = COLORES_SEMAFORO[estado]
-  const rango       = RANGOS_REFERENCIA[analito.analito]
-  const tieneExpl   = !!EXPLICACIONES[analito.analito]
+  const estado = semaforo(analito)
+  const colores = COLORES_SEMAFORO[estado]
+  const rango = RANGOS_REFERENCIA[analito.analito]
+  const tieneExpl = !!EXPLICACIONES[analito.analito]
 
-  // Calcular el texto del rango de referencia
-  const low  = analito.ref_low  !== null ? analito.ref_low  : (rango ? rango.ref_low  : null)
+  const low = analito.ref_low !== null ? analito.ref_low : (rango ? rango.ref_low : null)
   const high = analito.ref_high !== null ? analito.ref_high : (rango ? rango.ref_high : null)
 
   return (
-    <div className={"rounded-2xl border overflow-hidden hover:shadow-md transition-shadow " +
-      colores.fondo + " " + colores.borde}>
+    <div className={`rounded-3xl border overflow-hidden transition-all duration-300 hover:shadow-lg ${colores.fondo} ${colores.borde}`}>
+      
+      {/* CABECERA */}
+      <div className="p-5">
+        <div className="flex justify-between items-start gap-3">
+          <div className="flex-1">
+            <p className="font-semibold text-gray-800 text-[15px] leading-tight">
+              {analito.analito}
+            </p>
+            {rango && (
+              <p className="text-[10px] text-gray-400 mt-1">
+                Rango normal: {low} – {high} {analito.unidad}
+              </p>
+            )}
+          </div>
 
-      {/* ── CABECERA: nombre, valor y barra ── */}
-      <div className="p-4">
-
-        {/* Nombre del analito y badge de estado */}
-        <div className="flex justify-between items-start mb-2">
-          <p className="text-sm font-semibold text-gray-700 leading-tight pr-2">
-            {analito.analito}
-          </p>
-          <span className={"text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 " + colores.badge}>
+          <span className={`text-xs px-3 py-1 rounded-full font-semibold flex-shrink-0 ${colores.badge}`}>
             {colores.etiqueta}
           </span>
         </div>
 
-        {/* Valor numérico con unidad */}
-        <p className={"text-2xl font-bold mb-2 " + colores.texto}>
-          {analito.prefijo}{analito.valor_raw}
-          <span className="text-sm font-normal ml-1 text-gray-400">
-            {analito.unidad}
+        {/* VALOR PRINCIPAL */}
+        <div className="mt-4 flex items-baseline gap-2">
+          <span className={`text-4xl font-bold tracking-tighter ${colores.texto}`}>
+            {analito.prefijo}{analito.valor_raw}
           </span>
-        </p>
+          <span className="text-sm text-gray-400 font-medium">{analito.unidad}</span>
+        </div>
 
-        {/* Barra de progreso visual */}
+        {/* BARRA DE PROGRESO */}
         <BarraProgreso analito={analito} colorBarra={colores.barra} />
 
-        {/* Texto del rango de referencia */}
-        {low !== null && high !== null && (
-          <p className="text-xs text-gray-400 mt-2">
-            Rango normal: {low} a {high} {analito.unidad}
-          </p>
-        )}
-
-        {/* Botón para expandir la explicación */}
+        {/* BOTÓN DE EXPLICACIÓN */}
         {tieneExpl && (
           <button
             onClick={() => setExpandido(!expandido)}
-            className="mt-2 text-xs text-blue-600 font-medium hover:underline"
+            className="mt-4 text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
           >
             {expandido ? "Ocultar explicación" : "¿Qué significa este resultado?"}
+            <span className="text-base leading-none">{expandido ? "−" : "+"}</span>
           </button>
         )}
       </div>
 
-      {/* ── SECCIÓN EXPANDIBLE: explicación médica ── */}
+      {/* SECCIÓN EXPANDIBLE */}
       {expandido && <SeccionExplicacion analito={analito} />}
     </div>
   )
