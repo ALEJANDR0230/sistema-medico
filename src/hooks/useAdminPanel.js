@@ -7,8 +7,16 @@ export function useAdminPanel() {
   const [cargando, setCargando]             = useState(true)
   const [modalAbierto, setModalAbierto]     = useState(false)
   const [medicoEditando, setMedicoEditando] = useState(null)
+  
   const [form, setForm] = useState({
-    nombre: "", correo: "", password: "", rol: "medico", activo: true
+    nombre: "",
+    correo: "",
+    password: "",
+    telefono: "",
+    cedula_profesional: "",
+    especialidad: "",
+    rol: "medico",
+    activo: true
   })
 
   useEffect(() => { cargarMedicos() }, [])
@@ -21,22 +29,29 @@ export function useAdminPanel() {
     setCargando(false)
   }
 
-  const handleGuardar = async () => {
-    if (!form.nombre || !form.correo || !form.password) {
-      alert("Todos los campos son obligatorios")
+  const handleGuardar = async (formData) => {
+    const dataToSend = formData || form
+
+    if (!dataToSend.nombre || !dataToSend.correo || !dataToSend.password) {
+      alert("Nombre, correo y contraseña son obligatorios")
       return
     }
+
     if (medicoEditando) {
       await fetch(`${API}/${medicoEditando.id}`, {
         method:  "PUT",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(form),
+        body:    JSON.stringify(dataToSend),
       })
     } else {
       await fetch(API, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ ...form, rol: "medico", activo: true }),
+        body:    JSON.stringify({
+          ...dataToSend,
+          rol: "medico",
+          activo: true
+        }),
       })
     }
     cerrarModal()
@@ -64,13 +79,31 @@ export function useAdminPanel() {
 
   const abrirModalNuevo = () => {
     setMedicoEditando(null)
-    setForm({ nombre: "", correo: "", password: "", rol: "medico", activo: true })
+    setForm({
+      nombre: "",
+      correo: "",
+      password: "",
+      telefono: "",
+      cedula_profesional: "",
+      especialidad: "",
+      rol: "medico",
+      activo: true
+    })
     setModalAbierto(true)
   }
 
   const abrirModalEditar = (medico) => {
     setMedicoEditando(medico)
-    setForm({ nombre: medico.nombre, correo: medico.correo, password: medico.password, rol: medico.rol, activo: medico.activo })
+    setForm({
+      nombre: medico.nombre || "",
+      correo: medico.correo || "",
+      password: medico.password || "",
+      telefono: medico.telefono || "",
+      cedula_profesional: medico.cedula_profesional || "",
+      especialidad: medico.especialidad || "",
+      rol: medico.rol || "medico",
+      activo: medico.activo ?? true
+    })
     setModalAbierto(true)
   }
 
@@ -80,8 +113,17 @@ export function useAdminPanel() {
   }
 
   return {
-    medicos, cargando, modalAbierto, medicoEditando, form, setForm,
-    handleGuardar, handleDesactivar, handleReactivar,
-    abrirModalNuevo, abrirModalEditar, cerrarModal
+    medicos,
+    cargando,
+    modalAbierto,
+    medicoEditando,
+    form,
+    setForm,
+    handleGuardar,
+    handleDesactivar,
+    handleReactivar,
+    abrirModalNuevo,
+    abrirModalEditar,
+    cerrarModal
   }
 }

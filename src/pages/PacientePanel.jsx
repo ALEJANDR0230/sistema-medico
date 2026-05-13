@@ -22,14 +22,14 @@ function NavbarPaciente({ nombre, onLogout }) {
           <span className="text-white text-xl font-bold">SM</span>
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Sistema Médico</h1>
+          <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Sistema Médico</h1>
           <p className="text-sm text-gray-500 -mt-1">{nombre}</p>
         </div>
       </div>
 
       <button
         onClick={onLogout}
-        className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl text-sm font-medium transition-all active:scale-[0.985]"
+        className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-2xl text-sm font-semibold transition-all active:scale-[0.985]"
       >
         Cerrar sesión
       </button>
@@ -46,7 +46,7 @@ function PantallaCarga() {
           <div className="w-6 h-6 bg-blue-600 rounded-full animate-pulse" />
         </div>
       </div>
-      <p className="text-gray-500 mt-6 text-lg">Cargando tus datos...</p>
+      <p className="text-gray-500 mt-6 text-lg font-medium">Cargando tus datos...</p>
     </div>
   );
 }
@@ -95,10 +95,8 @@ function PacientePanel({ usuario, onLogout }) {
       <NavbarPaciente nombre={usuarioLocal.nombre} onLogout={onLogout} />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar de navegación */}
         <NavPestanas activa={pestanaActiva} onCambiar={setPestanaActiva} />
 
-        {/* Contenido principal */}
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-6xl mx-auto px-8 py-10">
             {cargando ? (
@@ -122,7 +120,7 @@ function PacientePanel({ usuario, onLogout }) {
                 {pestanaActiva === "tendencia" && (
                   <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
                     <div className="mb-6">
-                      <h3 className="text-2xl font-bold text-gray-800">Evolución de tus analisis</h3>
+                      <h3 className="text-2xl font-bold text-gray-800 tracking-tight">Evolución de tus análisis</h3>
                       <p className="text-gray-500 mt-1">
                         {historial.length} estudios registrados
                       </p>
@@ -146,7 +144,7 @@ function PacientePanel({ usuario, onLogout }) {
                 {pestanaActiva === "mapa" && (
                   <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
                     <div className="mb-6">
-                      <h3 className="text-2xl font-bold text-gray-800">Clínicas y Laboratorios cercanos</h3>
+                      <h3 className="text-2xl font-bold text-gray-800 tracking-tight">Clínicas y Laboratorios cercanos</h3>
                       <p className="text-gray-500">Encuentra dónde hacerte tu próximo estudio</p>
                     </div>
                     <MapaClinicas />
